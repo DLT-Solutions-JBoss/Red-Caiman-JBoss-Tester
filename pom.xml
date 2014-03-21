@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
         <modelVersion>4.0.0</modelVersion>
-        <groupId>helloworld</groupId>
+        <groupId>red-caiman-jboss-tester</groupId>
         <artifactId>red-caiman-jboss-tester</artifactId>
         <packaging>war</packaging>
         <version>1.0</version>
@@ -79,7 +79,7 @@ jboss-eap-*-maven-repository/org/jboss/spec/jboss-javaee-6.0
                         <!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
                         <id>openshift</id>
                         <build>
-                                <finalName>helloworld</finalName>
+                                <finalName>red-caiman-jboss-tester</finalName>
                                 <plugins>
                                         <plugin>
                                                 <artifactId>maven-war-plugin</artifactId>
