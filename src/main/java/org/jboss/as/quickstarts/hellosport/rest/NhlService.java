@@ -15,10 +15,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.persistence.Query;
 
-import org.jboss.as.quickstarts.helloworld.model.Player;
-import org.jboss.as.quickstarts.helloworld.model.Team;
-import org.jboss.as.quickstarts.helloworld.rest.SportService.ServiceType;
-import org.jboss.as.quickstarts.helloworld.rest.SportService;
+import org.jboss.as.quickstarts.hellosport.model.Player;
+import org.jboss.as.quickstarts.hellosport.model.Team;
+import org.jboss.as.quickstarts.hellosport.rest.SportService.ServiceType;
+import org.jboss.as.quickstarts.hellosport.rest.SportService;
 
 @Path("/NHL")
 public class NhlService implements SportService{
@@ -33,7 +33,7 @@ public class NhlService implements SportService{
         @SportService(ServiceType.NHL)
         public List<Player> listPlayers()
         {
-                Query query = emNhl.createQuery("FROM org.jboss.as.quickstarts.helloworld.model.Player order by last_name, first_name");
+                Query query = emNhl.createQuery("FROM org.jboss.as.quickstarts.hellosport.model.Player order by last_name, first_name");
                 @SuppressWarnings("unchecked")
                 List <Player> player = query.getResultList();  //Dummy comment
 
@@ -46,7 +46,7 @@ public class NhlService implements SportService{
         @SportService(ServiceType.NHL)
         public List<Team> listTeams()
         {
-                Query query = emNhl.createQuery("FROM org.jboss.as.quickstarts.helloworld.model.Team order by division, city, name");
+                Query query = emNhl.createQuery("FROM org.jboss.as.quickstarts.hellosport.model.Team order by division, city, name");
                 @SuppressWarnings("unchecked")
                 List <Team> team = query.getResultList();
 
@@ -59,7 +59,7 @@ public class NhlService implements SportService{
         @SportService(ServiceType.NHL)
         public List<Player> listTeam(@PathParam("teamId") int iTeamId)
         {
-                Query query = emNhl.createQuery("FROM org.jboss.as.quickstarts.helloworld.model.Player where team_id = ?1 order by last_name, first_name");
+                Query query = emNhl.createQuery("FROM org.jboss.as.quickstarts.hellosport.model.Player where team_id = ?1 order by last_name, first_name");
                 query.setParameter(1,iTeamId);
                 @SuppressWarnings("unchecked")
                 List <Player> player = query.getResultList();
