@@ -12,6 +12,22 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
             <property name="hibernate.show_sql" value="false" />
         </properties>
     </persistence-unit>
+    <persistence-unit name="NBA">
+        <jta-data-source>java:jboss/datasources/MysqlRdsDS</jta-data-source>
+        <properties>
+            <!-- Properties for Hibernate -->
+            <property name="hibernate.hbm2ddl.auto" value="validate" />
+            <property name="hibernate.show_sql" value="false" />
+        </properties>
+    </persistence-unit>
+    <persistence-unit name="MLB">
+        <jta-data-source>java:jboss/datasources/MyOracleDS</jta-data-source>
+        <properties>
+            <!-- Properties for Hibernate -->
+            <property name="hibernate.hbm2ddl.auto" value="validate" />
+            <property name="hibernate.show_sql" value="false" />
+        </properties>
+    </persistence-unit>
     <persistence-unit name="NHL">
         <jta-data-source>java:jboss/datasources/PostgreSQLDS</jta-data-source>
         <properties>
