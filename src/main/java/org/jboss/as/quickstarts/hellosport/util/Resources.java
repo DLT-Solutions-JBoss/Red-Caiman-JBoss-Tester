@@ -40,7 +40,15 @@ public class Resources {
     public Logger produceLog(InjectionPoint injectionPoint) {
         return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
     }
-
+    
+    @Produces
+    @PersistenceContext(unitName="NBA", type=PersistenceContextType.EXTENDED)  //AWS RDS MySql
+    private EntityManager emNba;
+    
+    @Produces
+    @PersistenceContext(unitName="MLB", type=PersistenceContextType.EXTENDED)  //AWS RDS Oracle
+    private EntityManager emMlb;
+    
     @Produces
     @RequestScoped
     public FacesContext produceFacesContext() {
