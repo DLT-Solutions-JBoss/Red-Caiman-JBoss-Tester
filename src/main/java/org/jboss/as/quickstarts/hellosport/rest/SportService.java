@@ -17,7 +17,7 @@ public @interface SportService {
         ServiceType value();
 
         public enum ServiceType{
-                NFL, NHL;
+                NFL, NHL, NBA, MLB;
         }
 
 }
