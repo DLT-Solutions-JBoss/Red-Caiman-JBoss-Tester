@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- CSS goes in the document HEAD or added to your external stylesheet -->
+<style type="text/css">
+table.gridtable {
+        font-family: verdana,arial,sans-serif;
+        font-size:11px;
+        color:#333333;
+        border-width: 1px;
+        border-color: #666666;
+        border-collapse: collapse;
+}
+table.gridtable th {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #666666;
+        background-color: #dedede;
+}
+table.gridtable td {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #666666;
+        background-color: #ffffff;
+}
+</style>
+<script>
+function loadTeams(sport)
+{
+   var restTeamHttp;
+   if (window.XMLHttpRequest)
+   {
+       // code for IE7+, Firefox, Chrome, Opera, Safari
+       restTeamHttp=new XMLHttpRequest();
+       restTeamHttp.overrideMimeType("application/json");
+   }
+   else
+   {
+       // code for IE6, IE5
+       restTeamHttp=new ActiveXObject("Microsoft.XMLHTTP");
+   }
+
+   restTeamHttp.onreadystatechange=function()
+   {
+      if (restTeamHttp.readyState==4 && restTeamHttp.status==200)
+      {
+          var template = '<table class=\"gridtable\"><tr><th>Conference</th><th>Division</th><th>City</th><th>Team</th></tr>';
+
+          var jsonData = JSON.parse(restTeamHttp.responseText);
+          var jsonRows = '';
+
+          for(var i = 0; i < jsonData.length; i++)
+          {
+             jsonRows += "<tr><td>"+
+                       jsonData[i].conference+"</td><td>"+
+                       jsonData[i].division+"</td><td>"+
+                       jsonData[i].city+"</td><td>"+
+                       "<a href=\"javascript:loadRoster('"+sport+"','"+jsonData[i].city+" "+jsonData[i].name+"','"+jsonData[i].id+"');\">"+jsonData[i].name+"</a></td></tr>";
+          }
+
+          document.getElementById("myDiv").innerHTML=template + jsonRows + "</table>";
+      }
+   }
+
+   document.getElementById("myTeam").innerHTML="";
+   restTeamHttp.open("GET","/rest/"+sport+"/teams",true);
+   restTeamHttp.send();
+}
+
+function loadRoster(sport, teamName, teamId)
+{
+   var restRosterHttp;
+   if (window.XMLHttpRequest)
+   {
+       // code for IE7+, Firefox, Chrome, Opera, Safari
+       restRosterHttp=new XMLHttpRequest();
+       restRosterHttp.overrideMimeType("application/json");
+   }
+   else
+   {
+       // code for IE6, IE5
+       restRosterHttp=new ActiveXObject("Microsoft.XMLHTTP");
+   }
+
+
+   restRosterHttp.onreadystatechange=function()
+   {
+      if (restRosterHttp.readyState==4 && restRosterHttp.status==200)
+      {
+          var template = '<h1>'+teamName+'</h1><table class=\"gridtable\"><tr><th>Position</th><th>Last Name</th><th>First Name</th></tr>';
+
+          var jsonRosterData = JSON.parse(restRosterHttp.responseText);
+          var jsonRosterRows = '';
+
+          for(var i = 0; i < jsonRosterData.length; i++)
+          {
+             jsonRosterRows += "<tr><td>"+
+                       jsonRosterData[i].position+"</td><td>"+
+                       jsonRosterData[i].lastName+"</td><td>"+
+                       jsonRosterData[i].firstName+"</td></tr>";
+          }
+
+          document.getElementById("myTeam").innerHTML=template + jsonRosterRows + "</table>";
+      }
+   }
+
+   restRosterHttp.open("GET","/rest/"+sport+"/team/"+teamId,true);
+   restRosterHttp.send();
+}
+</script>
+</head>
+<body>
+
+<button type="button" onclick="loadTeams('NFL')">Get NFL Team Info</button>
+<button type="button" onclick="loadTeams('NBA')">Get NBA Team Info</button>
+<button type="button" onclick="loadTeams('NHL')">Get NHL Team Info</button>
+<button type="button" onclick="loadTeams('MLB')">Get MLB Team Info</button>
+
+<h1>Sports Rosters</h1>
+<table>
+<tr>
+<td style="width:50%; vertical-align:top">
+<div id="myDiv"></div>
+</td>
+<td style="width:10%; vertical-align:top">&nbsp;</td>
+<td style="width:40%; vertical-align:top">
+<div id="myTeam"></div>
+</td>
+</tr>
+</table>
+
+</body>
+</html>
